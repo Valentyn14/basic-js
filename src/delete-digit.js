@@ -21,6 +21,7 @@ function deleteDigit(n) {
       maxNun = deletNumber;
     }
   }
+  
   return +maxNun;
 }
 

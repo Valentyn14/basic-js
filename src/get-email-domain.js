@@ -12,6 +12,7 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 function getEmailDomain( email ) {
   let res = '';
+  
   for (let i = email.length - 1; i > 0; i--) {
     if (email[i] === '@') {
       res = email.slice(i + 1);

@@ -20,13 +20,68 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  encrypt(text, key) {
+    if (arguments !== undefined && arguments.length === 2) {
+      const difLenght = Math.ceil(text.length / key.length);
+      key = key.toUpperCase().repeat(difLenght);
+      text = text.toUpperCase();
+
+      const codeCharA = "A".charCodeAt(0);
+      const charCount = 26;
+      let res = "";
+      let accDiffChar = 0;
+
+      for (let i = 0; i < text.length; i++) {
+        if (" !:,.1234)^".includes(text[i])) {
+          res += text[i];
+          accDiffChar += 1;
+        } else {
+          let letterCharIndex = text.charCodeAt(i) - codeCharA;
+          let step = key.charCodeAt(i - accDiffChar) - codeCharA;
+
+          res += String.fromCharCode(
+            codeCharA + ((letterCharIndex + step) % charCount)
+          );
+        }
+      }
+
+      return res; 
+    } else {
+      throw new Error("Incorrect arguments!");
+    }
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  decrypt(text, key) {
+    if (arguments !== undefined || arguments.length === 2) {
+      const difLenght = Math.ceil(text.length / key.length);
+      key = key.toUpperCase().repeat(difLenght);
+      text = text.toUpperCase();
+
+      const codeCharA = "A".charCodeAt(0);
+      const charCount = 26;
+      let res = "";
+      let accDiffChar = 0;
+
+      for (let i = 0; i < text.length; i++) {
+        if (" !:,.1234)^".includes(text[i])) {
+          res += text[i];
+          accDiffChar += 1;
+        } else {
+          let letterCharIndex = text.charCodeAt(i) - codeCharA;
+          let step = key.charCodeAt(i - accDiffChar) - codeCharA;
+
+          res += String.fromCharCode(
+            codeCharA + ((letterCharIndex - step + charCount) % charCount)
+          );
+        }
+      }
+
+      return res;
+
+    } else {
+      throw new Error("Incorrect arguments!");
+    }
   }
 }
 
